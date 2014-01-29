@@ -1,7 +1,7 @@
 SplitViewAutoLayout
 ===================
 
-This is a simple project to demonstrate how to use NSSplitView with Auto Layout. It consists of a three-paned view, where the middle pane contains an NSScrollView. Auto Layout is also used in the sroll view to center the document view.
+This is a simple project to demonstrate how to use NSSplitView with Auto Layout. It consists of a three-paned view, where the middle pane contains an NSScrollView. Auto Layout is also used in the scroll view to center the document view.
 
 Currently this is a work in progress.
 

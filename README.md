@@ -1,24 +1,51 @@
 SplitViewAutoLayout
 ===================
 
-This is a simple project to demonstrate how to use NSSplitView with Auto Layout. It consists of a three-paned view, where the middle pane contains an NSScrollView. Auto Layout is also used in the scroll view to center the document view.
+This is a simple project to demonstrate how to use NSSplitView with Auto Layout. It consists of a three-paned view, where the middle pane contains an NSScrollView. The views are animated when expanding/collapsing. No categories or subclasses are used.
 
-Currently this is a work in progress.
+TL;DR
+
+```objective-c
+// Simply wrap the changes in an NSAnimationContext.
+// The split view and sub layers must have CALayers turned on
+// (can be done in Interface Builder by checking the boxes for each view).
+//
+- (IBAction)toggleLeftPane:(id)sender
+{
+	[NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+		context.allowsImplicitAnimation = YES;
+		context.duration = 0.25; // seconds
+		context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+
+		if ([self.splitView isSubviewCollapsed:self.leftPane]) {
+			// -> expand
+			[self.splitView setPosition:_lastLeftPaneWidth ofDividerAtIndex:0];
+		} else {
+			// <- collapse
+			_lastLeftPaneWidth = self.leftPane.frame.size.width; //  remember current width to restore
+			[self.splitView setPosition:0 ofDividerAtIndex:0];
+		}
+		[self.splitView layoutSubtreeIfNeeded];
+	}];
+}
+```
+
+
 
 ##### Model
 
-The layout is roughly analogous to how Xcode is laid out.
+The layout is roughly analogous to how Xcode is laid out. All sizes described below are set up with Auto Layout constraints.
 
 * left pane has a minimum width of 100, but can grow (e.g. source view)
-* right pane is always fixed with a width of 150 (e.g. fixed inspector view)
+* right pane is always fixed with a width of 150 (e.g. a fixed inspector view)
 * middle pane has minimum width of 50
 * left and right panes can collapse either programmatically or via user dragging (i.e. classic NSSplitView behavior)
-* the middle pane should be the most free to resize when the window is resized - the left pane should only be resized upon user interaction (manual resize or a button to collapse it)
+* the middle pane should be the most free to resize when the window is resized - the left pane should only be resized upon user interaction (manual resize or a button to collapse it); this is accomplished by setting the middle pane's holding priority lower than the left's
 * there are buttons to toggle the left and right panes, and a third to load content into the middle pane
 
 ##### Project Settings
 
-Edit the project scheme and add this to "Arguments Passed on Launch".
+Edit the project scheme and add this to "Arguments Passed on Launch" - useful to debug any Auto Layout issues.
 
     -NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES
 
@@ -30,16 +57,17 @@ Edit the project scheme and add this to "Arguments Passed on Launch".
 * constrain the buttons to the top and left/right edges of the containing view
 * constrain the widths of the buttons
 * control-drag from split view to enclosing view in each direction to create four constraints to fill the view, leaving space for the toggle buttons
-* add an identifier to each pane view (`leftView`, `middleView`, and `rightView`)
+* add an identifier to each pane view (`leftPane`, `middlePane`, and `rightPane`)
 * select left pane, then Edit->Pin->Width, modify constraint created to a width of "greater than or equal" 100
 * repeat with middle pane, modify constraint created to a width of "greater than or equal" 50
 * select right pane, then Edit->Pin->Width, modify constraint created to a width of "greater than or equal" 100
-* select the NSSplitView and change the holding priorities:
+* select the NSSplitView and change the holding priorities (the important thing is that the left pane have a higher value than the middle):
   * left pane: 255
   * middle pane: 250 (default)
   * right pane: 250 (default)
-  
-  
+
+* in Interface Builder, turn on Core Animation layers for the split view and all sub views (optional, but required for transitions to be animated)
+
 #### Troubleshooting
 
 Initially I had this error upon running the application:
@@ -61,9 +89,4 @@ It’s important to note that if some of the `NSSplitView` delegate methods are 
 #### Notes
 
 The `NSScrollView` has a color background which is helpful for debugging.
-
-
-
-
-
 

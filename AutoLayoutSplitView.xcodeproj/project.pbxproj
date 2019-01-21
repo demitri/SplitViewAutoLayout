@@ -19,6 +19,8 @@
 		A67E6DD61872397B00CD86D2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A67E6DD41872397B00CD86D2 /* InfoPlist.strings */; };
 		A67E6DD81872397B00CD86D2 /* AutoLayoutSplitViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A67E6DD71872397B00CD86D2 /* AutoLayoutSplitViewTests.m */; };
 		A67E6DE418727F1200CD86D2 /* butterfly.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A67E6DE318727F1200CD86D2 /* butterfly.jpg */; };
+		A6C390B421F57A7200D8532F /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C390B221F57A7100D8532F /* Quartz.framework */; };
+		A6C390B521F57A7200D8532F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C390B321F57A7200D8532F /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		A67E6DD51872397B00CD86D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A67E6DD71872397B00CD86D2 /* AutoLayoutSplitViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoLayoutSplitViewTests.m; sourceTree = "<group>"; };
 		A67E6DE318727F1200CD86D2 /* butterfly.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = butterfly.jpg; sourceTree = "<group>"; };
+		A6C390B221F57A7100D8532F /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		A6C390B321F57A7200D8532F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C390B421F57A7200D8532F /* Quartz.framework in Frameworks */,
+				A6C390B521F57A7200D8532F /* QuartzCore.framework in Frameworks */,
 				A67E6DAE1872397B00CD86D2 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,6 +103,8 @@
 		A67E6DAC1872397B00CD86D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A6C390B221F57A7100D8532F /* Quartz.framework */,
+				A6C390B321F57A7200D8532F /* QuartzCore.framework */,
 				A67E6DAD1872397B00CD86D2 /* Cocoa.framework */,
 				A67E6DCC1872397B00CD86D2 /* XCTest.framework */,
 				A67E6DAF1872397B00CD86D2 /* Other Frameworks */,
@@ -392,6 +400,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AutoLayoutSplitView/AutoLayoutSplitView-Prefix.pch";
 				INFOPLIST_FILE = "AutoLayoutSplitView/AutoLayoutSplitView-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -405,6 +414,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AutoLayoutSplitView/AutoLayoutSplitView-Prefix.pch";
 				INFOPLIST_FILE = "AutoLayoutSplitView/AutoLayoutSplitView-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -469,6 +479,7 @@
 				A67E6DDD1872397B00CD86D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A67E6DDE1872397B00CD86D2 /* Build configuration list for PBXNativeTarget "AutoLayoutSplitViewTests" */ = {
 			isa = XCConfigurationList;
@@ -477,6 +488,7 @@
 				A67E6DE01872397B00CD86D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

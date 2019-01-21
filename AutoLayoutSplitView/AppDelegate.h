@@ -12,15 +12,17 @@
 	NSSize originalSize; // original values
 }
 
-@property (assign) IBOutlet NSWindow *window;
-@property (nonatomic, strong) IBOutlet NSSplitView *splitView;
-@property (nonatomic, strong) IBOutlet NSView *leftPane;
-@property (nonatomic, strong) IBOutlet NSView *middlePane;
-@property (nonatomic, strong) IBOutlet NSView *rightPane;
-@property (nonatomic, strong) IBOutlet NSSlider *slider;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint *leftPaneWidthConstraint;
+@property (nonatomic, strong) IBOutlet NSWindow *window;
+@property (nonatomic, weak) IBOutlet NSSplitView *splitView;
+@property (nonatomic, weak) IBOutlet NSView *leftPane;
+@property (nonatomic, weak) IBOutlet NSView *middlePane;
+@property (nonatomic, weak) IBOutlet NSView *rightPane;
+@property (nonatomic, weak) IBOutlet NSSlider *slider;
+@property (nonatomic, weak) IBOutlet NSScrollView *scrollView;
 
-@property (nonatomic, strong) IBOutlet NSScrollView *scrollView;
+// layout constraints
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *splitViewLeadingConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *splitViewTrailingConstraint;
 
 - (IBAction)toggleLeftPane:(id)sender;
 - (IBAction)toggleRightPane:(id)sender;

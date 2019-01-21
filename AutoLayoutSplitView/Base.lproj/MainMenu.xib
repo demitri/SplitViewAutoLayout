@@ -656,7 +656,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="581" height="401"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <splitView wantsLayer="YES" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G99-3Z-MCh">
+                    <splitView wantsLayer="YES" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G99-3Z-MCh">
                         <rect key="frame" x="0.0" y="0.0" width="581" height="340"/>
                         <subviews>
                             <customView identifier="leftView" wantsLayer="YES" id="L4I-ZW-k1P" userLabel="Left Pane View">
@@ -678,19 +678,19 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="fXH-fc-Vc6"/>
                                 </constraints>
                             </customView>
-                            <customView identifier="middleView" wantsLayer="YES" id="NCb-uJ-idX" userLabel="Middle Pane View">
-                                <rect key="frame" x="143" y="0.0" width="278" height="340"/>
+                            <customView identifier="middleView" wantsLayer="YES" misplaced="YES" id="NCb-uJ-idX" userLabel="Middle Pane View">
+                                <rect key="frame" x="142" y="0.0" width="278" height="340"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="U9U-Ff-DD5"/>
                                 </constraints>
                             </customView>
-                            <customView identifier="rightView" wantsLayer="YES" id="c5j-8S-WgI" userLabel="Right Pane View">
-                                <rect key="frame" x="431" y="0.0" width="150" height="340"/>
+                            <customView identifier="rightView" wantsLayer="YES" misplaced="YES" id="c5j-8S-WgI" userLabel="Right Pane View">
+                                <rect key="frame" x="429" y="0.0" width="152" height="340"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qfu-U5-jJ2">
-                                        <rect key="frame" x="25" y="163" width="101" height="14"/>
+                                        <rect key="frame" x="24" y="163" width="101" height="14"/>
                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Right (fixed width)" id="KF1-iw-FPs">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -791,10 +791,8 @@
         <customObject id="494" customClass="AppDelegate">
             <connections>
                 <outlet property="leftPane" destination="L4I-ZW-k1P" id="Tzv-1w-jJb"/>
-                <outlet property="leftPaneWidthConstraint" destination="fXH-fc-Vc6" id="BpB-hw-AcM"/>
                 <outlet property="middlePane" destination="NCb-uJ-idX" id="ons-DX-YtP"/>
                 <outlet property="rightPane" destination="c5j-8S-WgI" id="iEy-y8-tk7"/>
-                <outlet property="rightPaneWidthConstraint" destination="UhS-Tz-mNA" id="hf4-0r-Yld"/>
                 <outlet property="scrollView" destination="Apy-eM-XdW" id="kw6-px-ycL"/>
                 <outlet property="slider" destination="nhJ-kC-3yF" id="Qee-u6-Rhj"/>
                 <outlet property="splitView" destination="G99-3Z-MCh" id="Png-oL-caF"/>

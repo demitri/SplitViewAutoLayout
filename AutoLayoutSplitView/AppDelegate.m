@@ -10,21 +10,38 @@
 
 #import "AppDelegate.h"
 
+@interface AppDelegate ()
+{
+	// remember the width of the left pane before being collapsed (optional)
+	CGFloat _lastLeftPaneWidth;
+}
+
+@end
+
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 
+	/*
 	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 	[nc addObserver:self
 		   selector:@selector(splitViewDidResizeSubviews:)
 			   name:NSSplitViewDidResizeSubviewsNotification
 			 object:self.splitView];
+
+	[nc addObserver:self
+		   selector:@selector(splitViewWillResizeSubviews:)
+			   name:NSSplitViewWillResizeSubviewsNotification
+			 object:self.splitView];
+	 */
 }
 
 - (void)awakeFromNib
 {
-
+	self.leftPane.translatesAutoresizingMaskIntoConstraints = NO;
+	self.rightPane.translatesAutoresizingMaskIntoConstraints = NO;
+	_lastLeftPaneWidth = self.leftPane.frame.size.width;
 }
 
 - (IBAction)loadPhoto:(id)sender
@@ -63,68 +80,54 @@
 
 - (IBAction)toggleLeftPane:(id)sender
 {
-	// NOTE: The animation will only work if the split views and their children have
-	//       "wantsLayer" set to YES - easiest done by checking the "Core Animation Layer" in the nib.
-	
-	// NOTE: The split view divider should have zero width, otherwise when it is slid out of view,
-	//       the size can be changed by dragging the divider. This can be also avoided by returning NO for canCollapseSubview:
-	
-	if ([self.splitView isSubviewCollapsed:self.leftPane]) {
-		// can manually collapse view, handle this case
-		[self.splitView setPosition:self.leftPane.frame.size.width // view retains frame size when collapsed
-				   ofDividerAtIndex:0];
-	}
-	else {
-	
-		[NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
-			context.allowsImplicitAnimation = YES;
-			context.duration = 0.25; // seconds
-			context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-			
-			if (self.splitViewLeadingConstraint.constant < 0) {
-				// view is collapsed -> expand
-				self.splitViewLeadingConstraint.constant = 0;
-			} else {
-				// view is visible -> collapse
-				self.splitViewLeadingConstraint.constant = -self.leftPane.frame.size.width;
-			}
-			
-			[self.splitView layoutSubtreeIfNeeded];
-		}];
-	}
+	[NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+		context.allowsImplicitAnimation = YES;
+		context.duration = 0.25; // seconds
+		context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+
+		if ([self.splitView isSubviewCollapsed:self.leftPane]) {
+			// -> expand
+			[self.splitView setPosition:_lastLeftPaneWidth ofDividerAtIndex:0];
+		} else {
+			// <- collapse
+			_lastLeftPaneWidth = self.leftPane.frame.size.width; //  remember current width to restore
+			[self.splitView setPosition:0 ofDividerAtIndex:0];
+		}
+		
+		[self.splitView layoutSubtreeIfNeeded];
+	}];
 }
 
 - (IBAction)toggleRightPane:(id)sender
 {
-	if ([self.splitView isSubviewCollapsed:self.rightPane]) {
-		// can manually collapse view, handle this case - can remove this condition by returning NO for canCollapseSubview:
-		[self.splitView setPosition:NSMaxX(self.splitView.frame) - self.rightPane.frame.size.width // view retains frame size when collapsed
-				   ofDividerAtIndex:1];
-	} else {
-
-		[NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
-			context.allowsImplicitAnimation = YES;
-			context.duration = 0.25; // seconds
-			context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-			
-			if (self.splitViewTrailingConstraint.constant > 0) {
-				// pane collapsed -> expand
-				self.splitViewTrailingConstraint.constant = 0;
-			} else {
-				// pane is visible -> collapse
-				self.splitViewTrailingConstraint.constant = self.rightPane.frame.size.width * 2.0;
-			}
-			[self.splitView layoutSubtreeIfNeeded];
-		}];
-	}
-
+	[NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
+		context.allowsImplicitAnimation = YES;
+		context.duration = 0.25; // seconds
+		context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+		
+		if ([self.splitView isSubviewCollapsed:self.rightPane]) {
+			// -> expand
+			[self.splitView setPosition:NSMaxX(self.splitView.frame) - self.rightPane.frame.size.width ofDividerAtIndex:1];
+		} else {
+			// <- collapse
+			[self.splitView setPosition:NSMaxX(self.splitView.frame) ofDividerAtIndex:1];
+		}
+		
+		[self.splitView layoutSubtreeIfNeeded];
+	}];
 }
 
+/*
 - (void)splitViewDidResizeSubviews:(NSNotification *)aNotification
 {
-	DLog(@"");
+	return;
 }
 
+- (void)splitViewWillResizeSubviews:(NSNotification *)aNotification
+{
+	return;
+}
+*/
 
 #pragma mark - IBActions
 
@@ -145,8 +148,9 @@
 
 - (BOOL)splitView:(NSSplitView *)splitView canCollapseSubview:(NSView *)subview
 {
-	if (subview == self.leftPane)
+	if (subview == self.leftPane) {
 		return YES;
+	}
 	else if (subview == self.rightPane)
 		return YES;
 	
